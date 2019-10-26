@@ -55,5 +55,4 @@ But four years after crashing out at the group stage England tore the crown from
 entity_data = sample_analyze_entity_sentiment(text_content)
 entity_dataframe = pd.DataFrame(entity_data)
 
-# print(entity_data)
 entity_dataframe.to_csv('test_data.csv')
