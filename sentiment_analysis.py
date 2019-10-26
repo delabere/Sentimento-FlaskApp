@@ -1,7 +1,9 @@
 from google.cloud import language_v1
 from google.cloud.language_v1 import enums
 import pandas as pd
+import os
 
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
 
 def sample_analyze_entity_sentiment(text_content):
     """
@@ -32,19 +34,8 @@ def sample_analyze_entity_sentiment(text_content):
     response = client.analyze_entity_sentiment(document, encoding_type=encoding_type)
     # Loop through entities returned from the API
     for entity in response.entities:
-        current_entity = {}
-        print(u"Representative name for the entity: {}".format(entity.name))
-        current_entity['entity_name'] = entity.name
-        # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
-        print(u"Entity type: {}".format(enums.Entity.Type(entity.type).name))
-        current_entity['entity_type'] = enums.Entity.Type(entity.type).name
-        # Get the salience score associated with the entity in the [0, 1.0] range
-        print(u"Salience score: {}".format(entity.salience))
-        current_entity['entity_salience'] = entity.salience
-        # Get the aggregate sentiment expressed for this entity in the provided document.
-        sentiment = entity.sentiment
-        print(u"Entity sentiment score: {}".format(sentiment.score))
-        current_entity['entity_sentiment'] = sentiment.score
+        current_entity = {'entity_name': entity.name, 'entity_type': enums.Entity.Type(entity.type).name,
+                          'entity_salience': entity.salience, 'entity_sentiment': entity.sentiment.score}
         entity_data.append(current_entity)
     return entity_data
 
@@ -62,7 +53,7 @@ But four years after crashing out at the group stage England tore the crown from
 '''
 
 entity_data = sample_analyze_entity_sentiment(text_content)
-entity_data = pd.DataFrame(entity_data)
+entity_dataframe = pd.DataFrame(entity_data)
 
 # print(entity_data)
-entity_data.to_csv('test_data.csv')
+entity_dataframe.to_csv('test_data.csv')
