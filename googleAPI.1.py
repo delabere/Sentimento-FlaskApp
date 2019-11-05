@@ -8,8 +8,12 @@
 
 # https://newsapi.org/docs/endpoints/everything documentation
 
+from config import APIKEY
 import requests
-url = ('https://newsapi.org/v2/everything?q=england rugby or rugby&from=2019-10-25&to=2019-11-03&language=en&apiKey=fc58cf1054084810a4321540d58de7f1')
+
+# APIKEY = APIKEY
+
+url = (f'https://newsapi.org/v2/everything?q=england rugby or rugby&from=2019-10-25&to=2019-11-03&language=en&apiKey={APIKEY}')
 
 response = requests.get(url)
 
