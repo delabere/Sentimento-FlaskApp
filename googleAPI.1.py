@@ -15,14 +15,17 @@ url = (f'https://newsapi.org/v2/everything?q=england rugby or rugby&from=2019-10
 
 response = requests.get(url)
 
+with open('news.json', 'w+') as f:
+	f.write(response.text)
 
-#Meta Data for A&B testing
 
-print("Query Status:", response.json()['status'])
-print("total number of results:", response.json()['totalResults'])
-
-#Formatted to make readable in Powershell
-
-for index, DataChunks in enumerate(response.json()['articles']):
-    print(str(index) + "\t ", "**", DataChunks['title'].upper(), "**")
-    print("\t\t ", DataChunks['description'])
+# #Meta Data for A&B testing
+#
+# print("Query Status:", response.json()['status'])
+# print("total number of results:", response.json()['totalResults'])
+#
+# #Formatted to make readable in Powershell
+#
+# for index, DataChunks in enumerate(response.json()['articles']):
+#     print(str(index) + "\t ", "**", DataChunks['title'].upper(), "**")
+#     print("\t\t ", DataChunks['description'])
