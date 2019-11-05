@@ -11,11 +11,10 @@
 from config import APIKEY
 import requests
 
-# APIKEY = APIKEY
-
-url = (f'https://newsapi.org/v2/everything?q=england rugby or rugby&from=2019-10-25&to=2019-11-03&language=en&apiKey={APIKEY}')
+url = (f'https://newsapi.org/v2/everything?q=england rugby or rugby&from=2019-10-25&to=2019-11-03&language=en&apiKey={APIKEY}&pagesize=100&page=1')
 
 response = requests.get(url)
+
 
 #Meta Data for A&B testing
 
@@ -24,6 +23,6 @@ print("total number of results:", response.json()['totalResults'])
 
 #Formatted to make readable in Powershell
 
-for DataChunks in response.json()['articles']:
-    print("\t ", "**", DataChunks['title'].upper(), "**")
+for index, DataChunks in enumerate(response.json()['articles']):
+    print(str(index) + "\t ", "**", DataChunks['title'].upper(), "**")
     print("\t\t ", DataChunks['description'])
