@@ -8,6 +8,8 @@
 
 # https://newsapi.org/docs/endpoints/everything documentation
 
+
+
 from config import APIKEY
 import requests
 
