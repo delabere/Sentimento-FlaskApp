@@ -1,47 +1,50 @@
-# just something to help you get started mate...
+# from here its just an adaptation of your script:
 
-# import the parse function from the newly created google_news_parse module I created
 from google_news_parse import parse
 import pandas as pd
 
-# from here its just an adaptation of your script:
+
 from config import APIKEY
+
 import requests
 
+from datetime import datetime, timedelta
 
 parsed_data = pd.DataFrame()
 
-# somehow we need to be able to produce this manually just by specifying the date range (this is the format the API...
-# ...wants for datetimes)
-time_intervals = ['2019-09-06T00:00:00', '2019-09-06T12:00:00', '2019-10-06T00:00:00', '2019-10-06T12:00:00',
-                  '2019-11-06T00:00:00', '2019-11-06T12:00:00']
+#datetime(year, month, day)
 
-# put the request somewhere in this loop using the start and end times in the request
+start_date= datetime(2019,10,25)
+end_date= datetime(2019,11,5)
+diff= (end_date-start_date).days+1
+
+time_intervals = []
+
+for d in range(diff):
+    time_intervals.append(str(start_date+timedelta(d)))
+
+url = 'https://newsapi.org/v2/everything'
+
 for index, _ in enumerate(time_intervals):
     try:
         start = time_intervals[index]
         end = time_intervals[index + 1]
-        print(start, end)
-    except:
-        pass
-
-    # make your request here and pass it into the parse function we imported above
-    request_data = parse(# request response has to go in here
-    )
-
-    # then concat the dataframes you get out into the one above.
-    pd.concat(parsed_data, request_data)
-
-
-# see how we can make the requests a little more readable using the params argument of the requests.get() method
-url = 'https://newsapi.org/v2/everything'
-response = requests.get(url, params={
+        response = requests.get(url, params={
                                 'apiKey': APIKEY,
                                 'q': 'england rugby or rugby',
                                 'pagesize': 100,
-                                'from': '2019-10-25',
-                                'to': '2019-11-03',
+                                'from': start,
+                                'to': end,
                             })
+        request_data = parse(response)
+        parsed_data = parsed_data.append(request_data)
+    except:
+        print("We did it!")
+        break
 
-print(response.json())
+parsed_data.to_csv("rugbydata.csv", index=False)
 
+
+# request_data = parse(response)
+#
+# pd.concat(parsed_data, request_data)
