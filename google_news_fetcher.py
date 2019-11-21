@@ -40,4 +40,4 @@ for index, _ in enumerate(time_intervals):
         print("We did it!")
         break
 
-parsed_data.to_csv("rugbydata.csv", index=False)
+parsed_data.to_csv("data/rugby_data.csv", index=False)
