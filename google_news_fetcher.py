@@ -12,8 +12,6 @@ from datetime import datetime, timedelta
 
 parsed_data = pd.DataFrame()
 
-#datetime(year, month, day)
-
 start_date= datetime(2019,10,25)
 end_date= datetime(2019,11,5)
 diff= (end_date-start_date).days+1
@@ -43,8 +41,3 @@ for index, _ in enumerate(time_intervals):
         break
 
 parsed_data.to_csv("rugbydata.csv", index=False)
-
-
-# request_data = parse(response)
-#
-# pd.concat(parsed_data, request_data)
