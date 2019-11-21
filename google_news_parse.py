@@ -5,7 +5,7 @@ def parse(json_data):
     """takes json response object from google news API and flattens into a dataframe"""
     all_parsed = []
     # for each article in request_data, normalises into dict
-    for article in json_data['articles']:
+    for article in json_data.json()['articles']:
         parsed = {
             'source': article['source']['name'],
             'author': article['author'],
@@ -29,4 +29,3 @@ if __name__ == "__main__":
         data = json.load(f)
 
     print(parse(data))
-
