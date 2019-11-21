@@ -2,3 +2,4 @@ credentials.json
 config.py
 .vscode/
 .idea/
+.ipynb_checkpoints/
