@@ -3,7 +3,10 @@ from google.cloud.language_v1 import enums
 import pandas as pd
 import os
 
+print('hello world!')
+
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
+print('got credentials')
 
 def sample_analyze_entity_sentiment(text_content):
     """
