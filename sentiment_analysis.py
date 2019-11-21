@@ -3,17 +3,17 @@ from google.cloud.language_v1 import enums
 import pandas as pd
 import os
 
-print('hello world!')
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'credentials.json'
-print('got credentials')
 
-def sample_analyze_entity_sentiment(text_content):
+
+def sample_analyze_entity_sentiment(text_content, unique_id):
     """
     Analyzing Entity Sentiment in a String
 
     Args:
       text_content The text content to analyze
+      id The unique id to tie back to the source data
     """
 
     entity_data = []
@@ -37,25 +37,21 @@ def sample_analyze_entity_sentiment(text_content):
     response = client.analyze_entity_sentiment(document, encoding_type=encoding_type)
     # Loop through entities returned from the API
     for entity in response.entities:
-        current_entity = {'entity_name': entity.name, 'entity_type': enums.Entity.Type(entity.type).name,
+        current_entity = {'id': unique_id, 'entity_name': entity.name, 'entity_type': enums.Entity.Type(entity.type).name,
                           'entity_salience': entity.salience, 'entity_sentiment': entity.sentiment.score}
         entity_data.append(current_entity)
     return entity_data
 
 
-text_content = '''
-England had stormed into a 10-0 lead, Manu Tuilagi's second-minute try and a long-range penalty from George Ford fitting reward for a blistering first half.
+source_data = pd.read_csv(r'data/rugby_data.csv')
+zipped_data = zip(source_data['url'], source_data['description'])
 
-The 2003 winners could have been out of sight had tries for Sam Underhill and Ben Youngs not been ruled out by the video referee, but when Ardie Savea pounced on a wayward line-out throw to reduce the deficit to 13-7 the three-time world champions were on the charge.
+index = 0
+for unique_id, description in zipped_data:
+    entity_data =  pd.DataFrame(sample_analyze_entity_sentiment(description, unique_id))
+    index += 1
+    print(f'{index} / {len(source_data)}')
+    if not os.path.exists(r'data/rugby_sentiment_data.csv'):
+        entity_data.to_csv(r'data/rugby_sentiment_data.csv', index=False)
 
-Yet the superb Ford landed a trio of nerveless penalties and with the young dynamos Underhill and Tom Curry outstanding in the back row England held on in style to pull off one of their greatest victories.
-
-The All Blacks had not lost a World Cup game in 12 years and had won 15 of the past 16 games between the two nations.
-
-But four years after crashing out at the group stage England tore the crown from their head with a performance of unremitting energy and excellence on a night for the ages in Yokohama.
-'''
-
-entity_data = sample_analyze_entity_sentiment(text_content)
-entity_dataframe = pd.DataFrame(entity_data)
-
-entity_dataframe.to_csv('test_data.csv', index=False)
+    entity_data.to_csv(r'data/rugby_sentiment_data.csv', mode='a', header=False ,index=False)
