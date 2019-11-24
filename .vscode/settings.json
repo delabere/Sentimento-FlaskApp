@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "python.pythonPath": "/opt/anaconda3/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
+=======
+    "python.pythonPath": "C:\\Users\\Jack\\Anaconda3\\python.exe"
+>>>>>>> f7bb4219d83201a2a6350a59f07c2ab57ea4541e
 }
