@@ -31,7 +31,17 @@ def index():
                             asFigure=True
                         ).to_html()
 
-    charts = [figure_1, figure_2]
+
+    figure_3 = data[['entity_sentiment', 'entity_salience']].iplot(
+                            kind='hist',
+                            histnorm='percent',
+                            barmode='overlay',
+                            xTitle='entity_sentiment',
+                            yTitle='count',
+                            title='Sentiment/Salience Distribution',
+                            asFigure=True).to_html()
+
+    charts = [figure_1, figure_2, figure_3]
     return render_template('index.html', charts=charts)
 
 if __name__ == '__main__':
