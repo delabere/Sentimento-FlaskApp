@@ -1,13 +1,7 @@
-# from here its just an adaptation of your script:
-
 from google_news_parse import parse
 import pandas as pd
-
-
 from config import APIKEY
-
 import requests
-
 from datetime import datetime, timedelta
 
 parsed_data = pd.DataFrame()
