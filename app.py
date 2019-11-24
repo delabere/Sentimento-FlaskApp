@@ -9,9 +9,7 @@ app = Flask(__name__)
 cf.go_offline()
 
 @app.route('/')
-def hello():
-    # bar graph to show the entities from low to high sentiment (coloured by salience?)
-# saved into a figure object using asFigure=True
+def index():
     data = pd.read_csv(r'data/test_data.csv')
 
     figure_1 = data[['entity_sentiment','entity_name','entity_salience']]\
@@ -34,9 +32,7 @@ def hello():
     ).to_html()
 
     charts = [figure_1, figure_2]
-
     return render_template('index.html', charts=charts)
-    # return Markup(figure_1)
 
 if __name__ == '__main__':
     app.run()
