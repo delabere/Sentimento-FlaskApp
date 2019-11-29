@@ -2,3 +2,4 @@ google-cloud-language
 plotly
 chart-studio
 cufflinks
+flask
