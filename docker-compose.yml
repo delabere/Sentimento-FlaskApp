@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  sentimento:
+    container_name: sentimento
+    build: ./sentimento
+    command: gunicorn --bind 0.0.0.0:80 app:app
+    volumes:
+      -  ./sentimento:/usr/src/app
+    ports:
+      - 80:80

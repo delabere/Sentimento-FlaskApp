@@ -3,3 +3,4 @@ plotly
 chart-studio
 cufflinks
 flask
+gunicorn
